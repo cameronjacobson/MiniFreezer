@@ -1,0 +1,17 @@
+{
+	"name":"minifreezer/minifreezer",
+	"repositories":[
+        {
+            "type":"git",
+            "url":"https://github.com/cameronjacobson/SimpleHttpClient.git"
+        }
+	],
+    "require": {
+        "datashovel/simplehttpclient": "*@dev"
+    },
+	"autoload": {
+		"psr-0": {
+			"MiniFreezer": "src/"
+		}
+	}
+}
