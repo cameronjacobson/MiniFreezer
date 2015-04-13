@@ -16,6 +16,9 @@ abstract class MiniFreezer implements \JsonSerializable
 
 	public static function cast($json){
 		$json = (object)json_decode($json,true);
+		if(empty($json) || empty($json->class)){
+			return false;
+		}
 		$className = $json->class;
 		$ser = serialize($json);
 		return unserialize(str_replace('O:8:"stdClass"','O:'.strlen($className).':"'.$className.'"',$ser));
