@@ -15,4 +15,4 @@ $mf = new CouchDB([
 ]);
 
 class Stuff extends MiniFreezer { }
-
+class ViewTestClass extends MiniFreezer { }
