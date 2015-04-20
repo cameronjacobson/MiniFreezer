@@ -67,4 +67,40 @@ class CouchDB
 		$this->context->post($url, json_encode(array('docs'=>$objs)));
 		return $this->fetchResult($cb);
 	}
+
+	public function view(array $options,callable $cb = null){
+		$url = $this->getViewUrl($options);
+		$this->context->get($url);
+		return $this->fetchResult($cb);
+	}
+
+	private function getViewUrl(array $options){
+		$o = $this->validateViewRequest($options);
+		$view = '/'.$options['database'].'/_design/'.$options['design'].'/_view/'.$options['view'];
+		if(!empty($o)){
+			$view .= '?'.implode('&',$o);
+		}
+		return $view;
+	}
+
+	private function validateViewRequest(array $options){
+		if(empty($options['database']) || empty($options['design']) || empty($options['view'])){
+			throw new Exception('you must specify database, design, and view parameters');
+		}
+		$o = array();
+		if(!empty($options['limit'])){
+			$o[] = 'limit='.(int)$options['limit'];
+		}
+		if(!empty($options['descending'])){
+			$o[] = 'descending=true';
+		}
+		if(!empty($options['startkey'])){
+			$o[] = 'startkey='.urlencode(json_encode((string)$options['startkey']));
+			$o[] = 'skip=1';
+		}
+		if(!empty($options['include_docs'])){
+			$o[] = 'include_docs=true';
+		}
+		return $o;
+	}
 }

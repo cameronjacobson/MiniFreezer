@@ -1,0 +1,7 @@
+POST /test/_bulk_docs HTTP/1.0
+Host: datashovel_couchdb:5984
+Content-Type: application/json
+Content-Length: 218
+Connection: Close
+
+{"docs":[{"_id":"12345","class":"Stuff","state":{"a":1,"b":2},"hash":"146cc0896fbc35d338a8612405ff8b33458435c8"},{"_id":"54321","class":"Stuff","state":{"a":3,"b":4},"hash":"1284c31ac6f807c7441a42d93d3dbd8c58890270"}]}
