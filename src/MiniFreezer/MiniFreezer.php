@@ -15,10 +15,19 @@ abstract class MiniFreezer implements \JsonSerializable
 	public $_deleted;
 
 	public static function cast($json){
-		$json = (object)json_decode($json,true);
+
+		if(is_string($json)){
+			$json = json_decode($json,true);
+		}
+		if(!empty($json['body']) && !empty($json['headers'])){
+			$json = $json['body'];
+		}
+		$json = (object)$json;
+
 		if(empty($json) || empty($json->class)){
 			return false;
 		}
+
 		$className = $json->class;
 		$ser = serialize($json);
 		return unserialize(str_replace('O:8:"stdClass"','O:'.strlen($className).':"'.$className.'"',$ser));
